@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Text, View, FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
-import { missionList } from "../assets/MissionData";
+import { missionSelected } from "../assets/MissionData";
 
 class MissionListScreen extends Component {
   static navigationOptions = {
-    title: "任務"
+    title: "清單"
   };
 
   keyExtractor = (item, index) => index.toString();
@@ -24,7 +24,7 @@ class MissionListScreen extends Component {
         <ListItem title="頂置任務" subtitle="1000步和配對" bottomDivider />
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={missionList}
+          data={missionSelected}
           renderItem={this.renderMission}
         />
       </View>

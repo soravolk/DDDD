@@ -5,7 +5,7 @@ import { missionList } from "../assets/MissionData";
 
 class MissionSelectScreen extends Component {
   static navigationOptions = {
-    title: "任務"
+    title: "選擇"
   };
 
   keyExtractor = (item, index) => index.toString();

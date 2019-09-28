@@ -8,7 +8,8 @@ import {
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import MissionScreen from "../screens/MissionScreen";
+import MissionSelectScreen from "../screens/MissionSelectScreen";
+import MissionListScreen from "../screens/MissionListScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
 
 const config = Platform.select({
@@ -56,27 +57,10 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = "";
 
-const MissionStack = createStackNavigator(
+const MissionStack = createMaterialTopTabNavigator(
   {
-    Mission: MissionScreen
-  },
-  config
-);
-
-MissionStack.navigationOptions = {
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === "ios" ? "ios-list" : "ios-list"}
-    />
-  )
-};
-
-MissionStack.path = "";
-
-const MissionStack = createStackNavigator(
-  {
-    Mission: MissionScreen
+    MissionSelect: MissionSelectScreen,
+    MissionList: MissionListScreen
   },
   config
 );
