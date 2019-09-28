@@ -1,77 +1,122 @@
-import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import React from "react";
+import { Platform } from "react-native";
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator
+} from "react-navigation";
+import TabBarIcon from "../components/TabBarIcon";
+import HomeScreen from "../screens/HomeScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import MissionScreen from "../screens/MissionScreen";
+import ExchangeScreen from "../screens/ExchangeScreen";
 
 const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {},
+  web: { headerMode: "screen" },
+  default: {}
 });
+
+const ProfileStack = createStackNavigator(
+  {
+    Profile: ProfileScreen
+  },
+  config
+);
+
+ProfileStack.navigationOptions = {
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-person" : "md-person"}
+    />
+  )
+};
+
+ProfileStack.path = "";
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home: HomeScreen
   },
   config
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+        Platform.OS === "ios"
+          ? `ios-home${focused ? "" : "-outline"}`
+          : "md-home"
       }
     />
-  ),
+  )
 };
 
-HomeStack.path = '';
+HomeStack.path = "";
 
-const LinksStack = createStackNavigator(
+const MissionStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Mission: MissionScreen
   },
   config
 );
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+MissionStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-list" : "ios-list"}
+    />
+  )
 };
 
-LinksStack.path = '';
+MissionStack.path = "";
 
-const SettingsStack = createStackNavigator(
+const MissionStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    Mission: MissionScreen
   },
   config
 );
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+MissionStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-list" : "ios-list"}
+    />
+  )
 };
 
-SettingsStack.path = '';
+MissionStack.path = "";
+
+const ExchangeStack = createStackNavigator(
+  {
+    Exchange: ExchangeScreen
+  },
+  config
+);
+
+ExchangeStack.navigationOptions = {
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-cart" : "md-cart"}
+    />
+  )
+};
+
+ExchangeStack.path = "";
 
 const tabNavigator = createBottomTabNavigator({
+  ProfileStack,
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  MissionStack,
+  ExchangeStack
 });
 
-tabNavigator.path = '';
+tabNavigator.path = "";
 
 export default tabNavigator;
