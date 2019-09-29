@@ -1,11 +1,19 @@
 import React, { Component } from "react";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, StatusBar, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 import { missionSelected } from "../assets/MissionData";
 
+const StatusBarHeight = StatusBar.currentHeight;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: StatusBarHeight
+  }
+});
 class MissionListScreen extends Component {
   static navigationOptions = {
-    title: "清單"
+    title: "清單",
+    tabStyle: { paddingTop: StatusBarHeight }
   };
 
   keyExtractor = (item, index) => index.toString();
@@ -31,4 +39,5 @@ class MissionListScreen extends Component {
     );
   }
 }
+
 export default MissionListScreen;

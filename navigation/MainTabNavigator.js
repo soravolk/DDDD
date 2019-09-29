@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator,
@@ -12,6 +12,7 @@ import MissionSelectScreen from "../screens/MissionSelectScreen";
 import MissionListScreen from "../screens/MissionListScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
 
+const StatusBarHeight = StatusBar.currentHeight;
 const config = Platform.select({
   web: { headerMode: "screen" },
   default: {}
@@ -62,7 +63,13 @@ const MissionStack = createMaterialTopTabNavigator(
     MissionSelect: MissionSelectScreen,
     MissionList: MissionListScreen
   },
-  config
+  {
+    tabBarOptions: {
+      tabStyle: {
+        paddingTop: StatusBarHeight
+      }
+    }
+  }
 );
 
 MissionStack.navigationOptions = {
