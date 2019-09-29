@@ -1,7 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View } from "react-native";
 
-class ExchangeScreen extends Component {
+class ExchangeScreen extends React.PureComponent {
+  static navigationOptions = {
+    title: "點數專區",
+    headerStyle: {
+      backgroundColor: "#fffde7"
+    }
+  };
   render() {
     return (
       <View>
@@ -10,9 +16,5 @@ class ExchangeScreen extends Component {
     );
   }
 }
-
-ExchangeScreen.navigationOptions = {
-  title: "Exchange"
-};
 
 export default ExchangeScreen;

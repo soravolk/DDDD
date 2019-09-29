@@ -14,7 +14,7 @@ const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
 const styles = StyleSheet.create({
   wholeContainer: {
     flex: 1,
-    backgroundColor: "#fffde7",
+    backgroundColor: "#fafafa",
     paddingTop: 0.1 * STANDARD_SIZE,
     paddingHorizontal: 0.05 * STANDARD_SIZE
   },
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   nameText: {
-    fontSize: 0.07 * STANDARD_SIZE,
+    fontSize: 0.06 * STANDARD_SIZE,
     textAlign: "center"
   },
   introduceContainer: {
@@ -59,7 +59,10 @@ const styles = StyleSheet.create({
 
 class ProfileScreen extends React.PureComponent {
   static navigationOptions = {
-    title: "我的資訊"
+    title: "我的資訊",
+    headerStyle: {
+      backgroundColor: "#fffde7"
+    }
   };
 
   render() {
