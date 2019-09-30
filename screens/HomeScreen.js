@@ -27,6 +27,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end"
+  },
+  avatar: {
+    elevation: 8,
+    shadowColor: "#ffccbc",
+    shadowOpacity: 0.4,
+    shadowRadius: 7,
+    shadowOffset: {
+      height: 4,
+      width: 1
+    }
   }
 });
 
@@ -35,15 +45,20 @@ class HomeScreen extends React.PureComponent {
     header: null
   };
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <View style={styles.friendContainer}>
           <Avatar
             rounded
+            activeOpacity={0.3}
             size="large"
             source={{
               uri: "https://picsum.photos/100"
             }}
+            onPress={() => navigate("FriendList")}
+            containerStyle={styles.avatar}
           />
         </View>
         <Text style={{ textAlign: "center" }}>TEST</Text>

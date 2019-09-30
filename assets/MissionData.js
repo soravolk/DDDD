@@ -27,3 +27,26 @@ export const missionSelected = [
     description: "這是任務三"
   }
 ];
+
+export const friendList = [
+  {
+    name: "卡蹦",
+    description: "超"
+  },
+  {
+    name: "書宇",
+    description: "棒"
+  },
+  {
+    name: "車車",
+    description: "欸"
+  },
+  {
+    name: "念念",
+    description: "批"
+  },
+  {
+    name: "久久",
+    description: "批"
+  }
+];

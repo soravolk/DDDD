@@ -11,6 +11,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import MissionSelectScreen from "../screens/MissionSelectScreen";
 import MissionListScreen from "../screens/MissionListScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
+import FriendListScreen from "../screens/FriendListScreen";
 
 const StatusBarHeight = StatusBar.currentHeight;
 const config = Platform.select({
@@ -38,7 +39,8 @@ ProfileStack.path = "";
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: HomeScreen,
+    FriendList: FriendListScreen
   },
   config
 );
@@ -61,8 +63,14 @@ const MissionStack = createMaterialTopTabNavigator(
   },
   {
     tabBarOptions: {
+      labelStyle: {
+        color: "#ff6f00"
+      },
       tabStyle: {
-        paddingTop: StatusBarHeight
+        marginTop: StatusBarHeight
+      },
+      style: {
+        backgroundColor: "#fffde7"
       }
     }
   }

@@ -1,8 +1,16 @@
 import React, { Component } from "react";
-import { Text, View, FlatList, StyleSheet, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  StyleSheet,
+  StatusBar,
+  Dimensions
+} from "react-native";
 import { ListItem } from "react-native-elements";
-import { missionList } from "../assets/MissionData";
+import { friendList } from "../assets/MissionData";
 
+const StatusBarHeight = StatusBar.currentHeight;
 const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
 
 const styles = StyleSheet.create({
@@ -21,9 +29,10 @@ const styles = StyleSheet.create({
     }
   }
 });
-class MissionSelectScreen extends Component {
+
+class friendListScreen extends Component {
   static navigationOptions = {
-    title: "選擇",
+    // header: null,
     headerStyle: {
       backgroundColor: "#fffde7"
     }
@@ -31,30 +40,28 @@ class MissionSelectScreen extends Component {
 
   keyExtractor = (item, index) => index.toString();
 
-  renderMission = ({ item }) => {
+  renderFriends = ({ item }) => {
     return (
-      <View>
-        <ListItem
-          title={item.name}
-          subtitle={item.description}
-          containerStyle={styles.container}
-          bottomDivider
-        />
-      </View>
+      <ListItem
+        title={item.name}
+        subtitle={item.description}
+        leftAvatar={{ source: { uri: "https://picsum.photos/100" } }}
+        containerStyle={styles.container}
+      />
     );
   };
 
   render() {
     return (
       <View>
-        <ListItem title="頂置任務" subtitle="1000步和配對" bottomDivider />
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={missionList}
-          renderItem={this.renderMission}
+          data={friendList}
+          renderItem={this.renderFriends}
         />
       </View>
     );
   }
 }
-export default MissionSelectScreen;
+
+export default friendListScreen;
