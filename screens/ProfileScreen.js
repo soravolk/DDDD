@@ -8,21 +8,21 @@ import {
   Dimensions
 } from "react-native";
 import { Avatar, Divider } from "react-native-elements";
+import { LinearGradient } from "expo-linear-gradient";
 
 const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
 
 const styles = StyleSheet.create({
   wholeContainer: {
     flex: 1,
-    backgroundColor: "#fafafa",
-    paddingTop: 0.1 * STANDARD_SIZE,
-    paddingHorizontal: 0.05 * STANDARD_SIZE
+    backgroundColor: "#fafafa"
   },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff"
+    paddingTop: 0.1 * STANDARD_SIZE,
+    paddingHorizontal: 0.05 * STANDARD_SIZE
   },
   nameText: {
     fontSize: 0.06 * STANDARD_SIZE,
@@ -31,11 +31,11 @@ const styles = StyleSheet.create({
   introduceContainer: {
     flex: 1,
     alignItems: "center",
-    paddingTop: 0.06 * STANDARD_SIZE,
-    paddingBottom: 0.03 * STANDARD_SIZE
+
+    marginBottom: 0.03 * STANDARD_SIZE
   },
   introduceText: {
-    fontSize: 0.05 * STANDARD_SIZE
+    fontSize: 0.04 * STANDARD_SIZE
   },
   dividerContainer: {
     flex: 1,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   wishContainer: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#fff"
+    paddingHorizontal: 0.05 * STANDARD_SIZE
   },
   wishTitle: {
     fontSize: 0.06 * STANDARD_SIZE,
@@ -68,22 +68,24 @@ class ProfileScreen extends React.PureComponent {
   render() {
     return (
       <ScrollView style={styles.wholeContainer}>
-        <View style={styles.container}>
-          <Avatar
-            rounded
-            size="large"
-            source={{
-              uri: "https://picsum.photos/100"
-            }}
-            showEditButton
-          />
-          <Text style={styles.nameText}>小樹人精靈</Text>
-          <View style={styles.introduceContainer}>
-            <Text style={styles.introduceText}>
-              我很喜歡跑步，平常都跑5k，有時間的話還會再跑20k，請多指教
-            </Text>
+        <LinearGradient colors={["#fff59d", "#fff9c4", "#e1f5fe"]}>
+          <View style={styles.container}>
+            <Avatar
+              rounded
+              size="large"
+              source={{
+                uri: "https://picsum.photos/100"
+              }}
+              showEditButton
+            />
+            <Text style={styles.nameText}>小樹人精靈</Text>
+            <View style={styles.introduceContainer}>
+              <Text style={styles.introduceText}>
+                我很喜歡跑步，平常都跑5k，有時間的話還會再跑20k，請多指教
+              </Text>
+            </View>
           </View>
-        </View>
+        </LinearGradient>
         <View style={styles.dividerContainer}>
           <Divider />
         </View>
