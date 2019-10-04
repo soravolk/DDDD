@@ -83,6 +83,10 @@ const styles = StyleSheet.create({
       height: 4,
       width: 1
     }
+  },
+  otherContainer: {
+    margin: 0.03 * STANDARD_SIZE,
+    flexDirection: "row"
   }
 });
 
@@ -122,7 +126,34 @@ class ExchangeScreen extends React.PureComponent {
           </ScrollView>
         </View>
         <Divider />
-        <View></View>
+        <View style={styles.otherContainer}>
+          <Icon
+            name="ios-shirt"
+            type="ionicon"
+            size={25}
+            color="#bcaaa4"
+            reverse
+            raised
+          />
+          <Icon name="restaurant" size={25} color="#bcaaa4" reverse raised />
+          <Icon name="flight" size={25} color="#bcaaa4" reverse raised />
+          <Icon
+            name="md-book"
+            type="ionicon"
+            size={25}
+            color="#bcaaa4"
+            reverse
+            raised
+          />
+          <Icon
+            name="ios-phone-portrait"
+            type="ionicon"
+            size={25}
+            color="#bcaaa4"
+            reverse
+            raised
+          />
+        </View>
       </ScrollView>
     );
   }

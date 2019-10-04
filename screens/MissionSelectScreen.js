@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 });
 class MissionSelectScreen extends Component {
   static navigationOptions = {
-    title: "選擇",
+    title: "任務列表",
     headerStyle: {
       backgroundColor: "#fffde7"
     }

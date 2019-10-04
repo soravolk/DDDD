@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 });
 class MissionListScreen extends Component {
   static navigationOptions = {
-    title: "清單",
+    title: "執行中",
     headerStyle: {
       backgroundColor: "#fffde7"
     }
