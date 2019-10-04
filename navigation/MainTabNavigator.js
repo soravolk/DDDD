@@ -105,12 +105,17 @@ ExchangeStack.navigationOptions = {
 
 ExchangeStack.path = "";
 
-const tabNavigator = createBottomTabNavigator({
-  ProfileStack,
-  HomeStack,
-  MissionStack,
-  ExchangeStack
-});
+const tabNavigator = createBottomTabNavigator(
+  {
+    ProfileStack,
+    HomeStack,
+    MissionStack,
+    ExchangeStack
+  },
+  {
+    initialRouteName: "ExchangeStack"
+  }
+);
 
 tabNavigator.path = "";
 
