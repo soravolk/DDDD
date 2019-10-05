@@ -113,7 +113,7 @@ const tabNavigator = createBottomTabNavigator(
     ExchangeStack
   },
   {
-    initialRouteName: "ExchangeStack"
+    initialRouteName: "HomeStack"
   }
 );
 

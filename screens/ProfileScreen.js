@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   introduceContainer: {
     flex: 1,
     alignItems: "center",
-
     marginBottom: 0.03 * STANDARD_SIZE
   },
   introduceText: {
@@ -91,7 +90,19 @@ class ProfileScreen extends React.PureComponent {
         </View>
         <View style={styles.wishContainer}>
           <Text style={styles.wishTitle}>許願池</Text>
-          <Text style={styles.wishText}>#男生 #學生 #跑步</Text>
+          <Text style={styles.wishText}>#女生 #學生 #跑步</Text>
+        </View>
+        <View style={styles.dividerContainer}>
+          <Divider />
+        </View>
+        <View style={styles.wishContainer}>
+          <Text style={styles.wishTitle}>步數累計</Text>
+        </View>
+        <View style={styles.dividerContainer}>
+          <Divider />
+        </View>
+        <View style={styles.wishContainer}>
+          <Text style={styles.wishTitle}>基本資訊</Text>
         </View>
       </ScrollView>
     );

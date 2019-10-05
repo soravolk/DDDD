@@ -39,6 +39,7 @@ class MissionSelectScreen extends Component {
           subtitle={item.description}
           containerStyle={styles.container}
           bottomDivider
+          leftIcon={{ name: item.type }}
         />
       </View>
     );
