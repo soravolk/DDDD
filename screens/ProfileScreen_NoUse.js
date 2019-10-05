@@ -17,11 +17,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fafafa"
   },
+  outerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 0.1 * STANDARD_SIZE,
+    paddingTop: 0.15 * STANDARD_SIZE,
     paddingHorizontal: 0.05 * STANDARD_SIZE
   },
   nameText: {
@@ -31,7 +36,7 @@ const styles = StyleSheet.create({
   introduceContainer: {
     flex: 1,
     alignItems: "center",
-    marginBottom: 0.03 * STANDARD_SIZE
+    marginVertical: 0.03 * STANDARD_SIZE
   },
   introduceText: {
     fontSize: 0.04 * STANDARD_SIZE
@@ -58,15 +63,12 @@ const styles = StyleSheet.create({
 
 class ProfileScreen extends React.PureComponent {
   static navigationOptions = {
-    title: "我的資訊",
-    headerStyle: {
-      backgroundColor: "#fffde7"
-    }
-  };
-
-  render() {
-    return (
-      <ScrollView style={styles.wholeContainer}>
+    // title: "我的資訊",
+    // headerStyle: {
+    //   backgroundColor: "#fffde7"
+    // }
+    header: (
+      <View style={styles.outerContainer}>
         <LinearGradient colors={["#fff59d", "#fff9c4", "#e1f5fe"]}>
           <View style={styles.container}>
             <Avatar
@@ -85,6 +87,13 @@ class ProfileScreen extends React.PureComponent {
             </View>
           </View>
         </LinearGradient>
+      </View>
+    )
+  };
+
+  render() {
+    return (
+      <ScrollView style={styles.wholeContainer}>
         <View style={styles.dividerContainer}>
           <Divider />
         </View>

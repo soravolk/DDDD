@@ -7,11 +7,11 @@ import {
 } from "react-navigation";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
 import MissionSelectScreen from "../screens/MissionSelectScreen";
 import MissionListScreen from "../screens/MissionListScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
 import FriendListScreen from "../screens/FriendListScreen";
+import ProfileScreen from "./ProfileScreen";
 
 const StatusBarHeight = StatusBar.currentHeight;
 const config = Platform.select({

@@ -19,7 +19,6 @@ const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     justifyContent: "center",
     paddingTop: StatusBarHeight + 0.06 * STANDARD_SIZE
     // paddingHorizontal: 0.06 * STANDARD_SIZE
@@ -27,7 +26,9 @@ const styles = StyleSheet.create({
   friendContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    marginTop: 0.06 * STANDARD_SIZE,
+    marginRight: 0.06 * STANDARD_SIZE
   },
   avatar: {
     elevation: 8,
