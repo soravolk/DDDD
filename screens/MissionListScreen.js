@@ -5,9 +5,10 @@ import {
   FlatList,
   StatusBar,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  Modal
 } from "react-native";
-import { ListItem } from "react-native-elements";
+import { ListItem, Avatar, Button } from "react-native-elements";
 import { missionSelected } from "../assets/MissionData";
 import Svg, { Circle, Line } from "react-native-svg";
 
@@ -32,6 +33,112 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: "black",
     width: STANDARD_SIZE / 2
+  },
+  modalContainer: {
+    backgroundColor: "#fffde7",
+    width: "100%",
+    height: "100%",
+    paddingVertical: 0.1 * STANDARD_SIZE
+  },
+  avatar: {
+    elevation: 8,
+    shadowColor: "#ffccbc",
+    shadowOpacity: 0.4,
+    shadowRadius: 7,
+    shadowOffset: {
+      height: 4,
+      width: 1
+    }
+  },
+  avatarBackground: {
+    backgroundColor: "#fafafa",
+    marginTop: 0.23 * STANDARD_SIZE,
+    width: "100%",
+    height: "20%",
+    zIndex: 1,
+    position: "absolute"
+  },
+  modalContainerInner: {
+    marginTop: 0.08 * STANDARD_SIZE,
+    alignItems: "center",
+    zIndex: 2
+  },
+  infoContainer: {
+    marginVertical: 0.04 * STANDARD_SIZE,
+    paddingHorizontal: 0.02 * STANDARD_SIZE,
+    width: "50%",
+    backgroundColor: "#ffab91",
+    borderRadius: 10,
+    elevation: 8,
+    shadowColor: "#ffccbc",
+    shadowOpacity: 0.4,
+    shadowRadius: 7,
+    shadowOffset: {
+      height: 4,
+      width: 1
+    }
+  },
+  infoText: {
+    fontSize: 0.05 * STANDARD_SIZE,
+    lineHeight: 0.09 * STANDARD_SIZE
+  },
+  introContainer: {
+    marginVertical: 0.04 * STANDARD_SIZE,
+    paddingHorizontal: 0.02 * STANDARD_SIZE,
+    width: "80%",
+    backgroundColor: "#fafafa",
+    borderRadius: 10,
+    elevation: 8,
+    shadowColor: "#ffccbc",
+    shadowOpacity: 0.4,
+    shadowRadius: 7,
+    shadowOffset: {
+      height: 4,
+      width: 1
+    }
+  },
+  introText: {
+    fontSize: 0.04 * STANDARD_SIZE,
+    lineHeight: 0.07 * STANDARD_SIZE
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    margin: 0.02 * STANDARD_SIZE
+  },
+  buttonItem: {
+    borderRadius: 10,
+    elevation: 8,
+    shadowColor: "#ffccbc",
+    shadowOpacity: 0.4,
+    shadowRadius: 7,
+    shadowOffset: {
+      height: 4,
+      width: 1
+    },
+    marginHorizontal: 0.03 * STANDARD_SIZE
+  },
+  pointModalContainer: {
+    marginVertical: 0.3 * STANDARD_SIZE,
+    marginHorizontal: 0.1 * STANDARD_SIZE,
+    backgroundColor: "#fffde7",
+    borderRadius: 10,
+    elevation: 8,
+    shadowColor: "#ffccbc",
+    shadowOpacity: 0.4,
+    shadowRadius: 7,
+    shadowOffset: {
+      height: 4,
+      width: 1
+    }
+  },
+  pointModalContainerInner: {
+    alignItems: "center",
+    paddingHorizontal: 0.12 * STANDARD_SIZE,
+    paddingVertical: 0.08 * STANDARD_SIZE
+  },
+  pointText: {
+    fontSize: 0.05 * STANDARD_SIZE,
+    marginVertical: 0.04 * STANDARD_SIZE
   }
 });
 
@@ -67,12 +174,17 @@ const ProgressBar = random => {
     </View>
   );
 };
-class MissionListScreen extends Component {
+class MissionListScreen extends React.PureComponent {
   static navigationOptions = {
     title: "執行中",
     headerStyle: {
       backgroundColor: "#fffde7"
     }
+  };
+
+  state = {
+    modalVisible: false,
+    pointModalVisible: false
   };
 
   keyExtractor = (item, index) => index.toString();
@@ -87,15 +199,89 @@ class MissionListScreen extends Component {
           bottomDivider
           leftIcon={{ name: item.type }}
           rightElement={ProgressBar(item.random)}
+          onPress={this.setPointVisible}
         />
       </View>
     );
   };
 
+  setPointVisible = () => {
+    this.setState({ pointModalVisible: !this.state.pointModalVisible });
+  };
+
+  setVisible = () => {
+    this.setState({ modalVisible: !this.state.modalVisible });
+  };
+
   render() {
     return (
       <View>
-        <ListItem title="頂置任務" subtitle="1000步和配對" bottomDivider />
+        <Modal
+          visible={this.state.modalVisible}
+          onRequestClose={this.setVisible}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.avatarBackground} />
+            <View style={styles.modalContainerInner}>
+              <Avatar
+                rounded
+                size="xlarge"
+                containerStyle={styles.avatarContainer}
+                source={{
+                  uri: "https://picsum.photos/100"
+                }}
+              />
+              <View style={styles.infoContainer}>
+                <Text style={styles.infoText}>ID: 敲敲</Text>
+              </View>
+              <View style={styles.infoContainer}>
+                <Text style={styles.infoText}>性別: 女</Text>
+              </View>
+              <View style={styles.infoContainer}>
+                <Text style={styles.infoText}>職業: 學生</Text>
+              </View>
+              <View style={styles.introContainer}>
+                <Text style={styles.introText}>
+                  我愛速大麻weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+                </Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Button
+                  buttonStyle={styles.buttonItem}
+                  title="放棄"
+                  outline
+                  onPress={this.setVisible}
+                />
+                <Button buttonStyle={styles.buttonItem} title="選定" outline />
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          visible={this.state.pointModalVisible}
+          onRequestClose={this.setPointVisible}
+          transparent={true}
+        >
+          <View style={styles.pointModalContainer}>
+            <View style={styles.pointModalContainerInner}>
+              <Text style={styles.pointText}>獲得50點！</Text>
+              <View style={styles.buttonContainer}>
+                <Button
+                  buttonStyle={styles.buttonItem}
+                  title="OK"
+                  outline
+                  onPress={this.setPointVisible}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <ListItem
+          title="頂置任務"
+          subtitle="1000步和配對"
+          bottomDivider
+          onPress={this.setVisible}
+        />
         <FlatList
           keyExtractor={this.keyExtractor}
           data={missionSelected}
