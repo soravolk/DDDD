@@ -99,11 +99,27 @@ class friendListScreen extends Component {
   keyExtractor = (item, index) => index.toString();
 
   renderFriends = ({ item }) => {
+    var image;
+
+    if (item.image === "profile1") {
+      image = "../assets/images/profile1.jpg";
+    } else if (item.image === "profile2") {
+      image = "../assets/images/profile2.jpg";
+    } else if (item.image === "profile3") {
+      image = "../assets/images/profile3.jpg";
+    } else if (item.image === "profile4") {
+      image = "../assets/images/profile4.jpg";
+    } else if (item.image === "profile5") {
+      image = "../assets/images/profile5.jpg";
+    }
+
     return (
       <ListItem
         title={item.name}
-        subtitle={item.description}
-        leftAvatar={{ source: { uri: "https://picsum.photos/100" } }}
+        subtitle={image}
+        leftAvatar={{
+          source: require(`../assets/images/profile1.jpg`)
+        }}
         containerStyle={styles.container}
         onPress={() => {
           this.setVisible();
