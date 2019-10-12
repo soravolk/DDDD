@@ -107,13 +107,19 @@ ExchangeStack.path = "";
 
 const tabNavigator = createBottomTabNavigator(
   {
-    ProfileStack,
-    HomeStack,
-    MissionStack,
-    ExchangeStack
+    Profile: ProfileStack,
+    Home: HomeStack,
+    Mission: MissionStack,
+    Exchange: ExchangeStack
   },
   {
-    initialRouteName: "HomeStack"
+    initialRouteName: "Home",
+    tabBarOptions: {
+      style: {
+        backgroundColor: "#fffde7"
+      },
+      showLabel: false
+    }
   }
 );
 

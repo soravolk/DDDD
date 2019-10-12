@@ -1,9 +1,10 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "react-navigation";
+import TabBarIcon from "../components/TabBarIcon";
 import WishScreen from "../screens/WishScreen";
 import PathScreen from "../screens/PathScreen";
 import InfoScreen from "../screens/InfoScreen";
-import { ScrollView, StyleSheet, Text, View, Dimensions } from "react-native";
+import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
 import { Avatar, Divider } from "react-native-elements";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -39,9 +40,39 @@ const styles = StyleSheet.create({
 
 const ProfileScreen = createMaterialTopTabNavigator(
   {
-    Wish: WishScreen,
-    Path: PathScreen,
-    Info: InfoScreen
+    Wish: {
+      screen: WishScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+          <TabBarIcon
+            focused={focused}
+            name={Platform.OS === "ios" ? "ios-star-half" : "md-star-half"}
+          />
+        )
+      }
+    },
+    Path: {
+      screen: PathScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+          <TabBarIcon
+            focused={focused}
+            name={Platform.OS === "ios" ? "ios-stats" : "md-stats"}
+          />
+        )
+      }
+    },
+    Info: {
+      screen: InfoScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+          <TabBarIcon
+            focused={focused}
+            name={Platform.OS === "ios" ? "ios-document" : "md-document"}
+          />
+        )
+      }
+    }
   },
   {
     tabBarOptions: {
@@ -50,19 +81,21 @@ const ProfileScreen = createMaterialTopTabNavigator(
       },
       style: {
         backgroundColor: "#fffde7"
-      }
+      },
+      showLabel: false,
+      showIcon: true
     }
   }
 );
 
-ProfileScreen.navigationOptions = {
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === "ios" ? "ios-list" : "ios-list"}
-    />
-  )
-};
+// WishScreen.navigationOptions = {
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon
+//       focused={focused}
+//       name={Platform.OS === "ios" ? "ios-list" : "ios-list"}
+//     />
+//   )
+// };
 
 ProfileScreen.path = "";
 
