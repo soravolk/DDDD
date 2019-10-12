@@ -9,7 +9,6 @@ import {
   Modal
 } from "react-native";
 import { ListItem, Avatar, Button } from "react-native-elements";
-import { missionSelected } from "../assets/MissionData";
 import Svg, { Circle, Line } from "react-native-svg";
 
 const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
@@ -174,6 +173,7 @@ const ProgressBar = random => {
     </View>
   );
 };
+
 class MissionListScreen extends React.PureComponent {
   static navigationOptions = {
     title: "執行中",
@@ -184,7 +184,8 @@ class MissionListScreen extends React.PureComponent {
 
   state = {
     modalVisible: false,
-    pointModalVisible: false
+    pointModalVisible: false,
+    missionSelected: null
   };
 
   keyExtractor = (item, index) => index.toString();
@@ -194,7 +195,9 @@ class MissionListScreen extends React.PureComponent {
       <View>
         <ListItem
           title={item.name}
-          subtitle={item.description}
+          titleProps={{
+            numberOfLines: 1
+          }}
           containerStyle={styles.container}
           bottomDivider
           leftIcon={{ name: item.type }}
@@ -214,6 +217,10 @@ class MissionListScreen extends React.PureComponent {
   };
 
   render() {
+    const missionSelected = this.props.navigation.getParam(
+      "missionSelected",
+      null
+    );
     return (
       <View>
         <Modal

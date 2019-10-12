@@ -5,7 +5,8 @@ import {
   FlatList,
   StyleSheet,
   Dimensions,
-  Modal
+  Modal,
+  ScrollView
 } from "react-native";
 import { ListItem, Avatar, Button } from "react-native-elements";
 import { missionList, missionSelected } from "../assets/MissionData";
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    margin: 0.02 * STANDARD_SIZE
+    paddingVertical: 0.03 * STANDARD_SIZE
   },
   buttonItem: {
     borderRadius: 10,
@@ -59,14 +60,17 @@ const styles = StyleSheet.create({
   },
   modalContainerInner: {
     alignItems: "center",
-    paddingHorizontal: 0.12 * STANDARD_SIZE,
-    paddingVertical: 0.08 * STANDARD_SIZE
+    paddingHorizontal: 0.1 * STANDARD_SIZE,
+    paddingTop: 0.05 * STANDARD_SIZE,
+    paddingBottom: 0.01 * STANDARD_SIZE,
+    maxHeight: 1.2 * STANDARD_SIZE
   },
   descriptionContainer: {
     paddingVertical: 0.08 * STANDARD_SIZE
   },
   descriptionText: {
-    fontSize: 0.05 * STANDARD_SIZE
+    fontSize: 0.04 * STANDARD_SIZE,
+    lineHeight: 0.08 * STANDARD_SIZE
   }
 });
 class MissionSelectScreen extends Component {
@@ -91,29 +95,15 @@ class MissionSelectScreen extends Component {
     this.setState({ modalVisible: !this.state.modalVisible });
   };
 
-  handleAccept = () => {
-    this.setVisible();
-    const missionList = this.state.missionList.filter(
-      item => item.id != this.state.itemId
-    );
-    const missionSelected = this.state.missionSelected.push({
-      name: this.state.name,
-      description: this.state.description,
-      type: this.state.type,
-      random: 0
-    });
-    this.setState({
-      missionList: missionList,
-      missionSelected: missionSelected
-    });
-  };
-
   renderMission = ({ item }) => {
     return (
       <View>
         <ListItem
           title={item.name}
           subtitle={item.description}
+          subtitleProps={{
+            numberOfLines: 1
+          }}
           containerStyle={styles.container}
           bottomDivider
           leftIcon={{ name: item.type }}
@@ -132,8 +122,26 @@ class MissionSelectScreen extends Component {
   };
 
   render() {
+    const { navigate } = this.props.navigation;
+    const handleAccept = () => {
+      this.setVisible();
+      const missionList = this.state.missionList.filter(
+        item => item.id != this.state.itemId
+      );
+      const missionSelected = this.state.missionSelected.concat({
+        name: this.state.name,
+        description: this.state.description,
+        type: this.state.type,
+        random: 0
+      });
+      this.setState({
+        missionList: missionList,
+        missionSelected: missionSelected
+      });
+      navigate("MissionList", { missionSelected: this.state.missionSelected });
+    };
     return (
-      <View>
+      <ScrollView>
         <Modal
           visible={this.state.modalVisible}
           onRequestClose={this.setVisible}
@@ -141,11 +149,11 @@ class MissionSelectScreen extends Component {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContainerInner}>
-              <View style={styles.descriptionContainer}>
+              <ScrollView style={styles.descriptionContainer}>
                 <Text style={styles.descriptionText}>
-                  跑吧跑吧一直跑，邀請一位隊友跑吧跑吧一直跑
+                  {this.state.description}
                 </Text>
-              </View>
+              </ScrollView>
               <View style={styles.buttonContainer}>
                 <Button
                   buttonStyle={styles.buttonItem}
@@ -157,7 +165,7 @@ class MissionSelectScreen extends Component {
                   buttonStyle={styles.buttonItem}
                   title="接受"
                   outline
-                  onPress={this.handleAccept}
+                  onPress={handleAccept}
                 />
               </View>
             </View>
@@ -174,7 +182,7 @@ class MissionSelectScreen extends Component {
           data={this.state.missionList}
           renderItem={this.renderMission}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
