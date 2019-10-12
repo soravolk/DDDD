@@ -79,6 +79,14 @@ const styles = StyleSheet.create({
   }
 });
 
+const PROFILE = {
+  profile0: require("../assets/images/profile1.jpg"),
+  profile1: require("../assets/images/profile2.jpg"),
+  profile2: require("../assets/images/profile3.jpg"),
+  profile3: require("../assets/images/profile4.jpg"),
+  profile4: require("../assets/images/profile5.jpg")
+};
+
 class friendListScreen extends Component {
   state = {
     modalVisible: false,
@@ -98,27 +106,13 @@ class friendListScreen extends Component {
 
   keyExtractor = (item, index) => index.toString();
 
-  renderFriends = ({ item }) => {
-    var image;
-
-    if (item.image === "profile1") {
-      image = "../assets/images/profile1.jpg";
-    } else if (item.image === "profile2") {
-      image = "../assets/images/profile2.jpg";
-    } else if (item.image === "profile3") {
-      image = "../assets/images/profile3.jpg";
-    } else if (item.image === "profile4") {
-      image = "../assets/images/profile4.jpg";
-    } else if (item.image === "profile5") {
-      image = "../assets/images/profile5.jpg";
-    }
-
+  renderFriends = ({ item, index }) => {
     return (
       <ListItem
         title={item.name}
-        subtitle={image}
+        subtitle={"../assets/images/profile2.jpg"}
         leftAvatar={{
-          source: require(`../assets/images/profile1.jpg`)
+          source: PROFILE["profile" + index]
         }}
         containerStyle={styles.container}
         onPress={() => {
