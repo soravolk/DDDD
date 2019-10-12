@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { ListItem, Avatar, Button } from "react-native-elements";
 import Svg, { Circle, Line } from "react-native-svg";
+import { missionSelected } from "../assets/MissionData";
 
 const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
 
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
 });
 
 const ProgressBar = random => {
-  const height = STANDARD_SIZE / 10;
+  const height = STANDARD_SIZE / 12;
   const width = STANDARD_SIZE / 2;
   const y_axis = height / 1.8;
   const x_axis = width - 10;
@@ -184,8 +185,7 @@ class MissionListScreen extends React.PureComponent {
 
   state = {
     modalVisible: false,
-    pointModalVisible: false,
-    missionSelected: null
+    pointModalVisible: false
   };
 
   keyExtractor = (item, index) => index.toString();
@@ -201,7 +201,7 @@ class MissionListScreen extends React.PureComponent {
           containerStyle={styles.container}
           bottomDivider
           leftIcon={{ name: item.type }}
-          rightElement={ProgressBar(item.random)}
+          subtitle={ProgressBar(item.random)}
           onPress={this.setPointVisible}
         />
       </View>
@@ -217,10 +217,8 @@ class MissionListScreen extends React.PureComponent {
   };
 
   render() {
-    const missionSelected = this.props.navigation.getParam(
-      "missionSelected",
-      null
-    );
+    const missionAdd = this.props.navigation.getParam("missionSelected");
+    const missionList = missionAdd ? missionAdd : missionSelected;
     return (
       <View>
         <Modal
@@ -234,23 +232,19 @@ class MissionListScreen extends React.PureComponent {
                 rounded
                 size="xlarge"
                 containerStyle={styles.avatarContainer}
-                source={{
-                  uri: "https://picsum.photos/100"
-                }}
+                source={require("../assets/images/card.jpg")}
               />
               <View style={styles.infoContainer}>
-                <Text style={styles.infoText}>ID: 敲敲</Text>
+                <Text style={styles.infoText}>ID: 卡蹦</Text>
               </View>
               <View style={styles.infoContainer}>
-                <Text style={styles.infoText}>性別: 女</Text>
+                <Text style={styles.infoText}>性別: 男</Text>
               </View>
               <View style={styles.infoContainer}>
                 <Text style={styles.infoText}>職業: 學生</Text>
               </View>
               <View style={styles.introContainer}>
-                <Text style={styles.introText}>
-                  我愛速大麻weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
-                </Text>
+                <Text style={styles.introText}>我愛跑馬拉松</Text>
               </View>
               <View style={styles.buttonContainer}>
                 <Button
@@ -291,7 +285,7 @@ class MissionListScreen extends React.PureComponent {
         />
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={missionSelected}
+          data={missionList}
           renderItem={this.renderMission}
         />
       </View>

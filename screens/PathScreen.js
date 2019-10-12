@@ -1,5 +1,12 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View, Dimensions } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image
+} from "react-native";
 import { Icon, Divider } from "react-native-elements";
 
 const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
@@ -61,6 +68,9 @@ const styles = StyleSheet.create({
   },
   editIcon: {
     marginLeft: 0.01 * STANDARD_SIZE
+  },
+  graphContainer: {
+    alignItems: "center"
   }
 });
 
@@ -83,6 +93,13 @@ const PathScreen = () => {
       </View>
       <View style={styles.dividerContainer}>
         <Divider />
+      </View>
+      <View style={styles.graphContainer}>
+        <Text style={styles.wishTitle}>近期步數統計</Text>
+        <Image
+          style={{ height: 180, width: 180 }}
+          source={require("../assets/images/graph.png")}
+        />
       </View>
     </ScrollView>
   );

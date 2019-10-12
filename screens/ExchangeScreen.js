@@ -17,10 +17,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fafafa",
     paddingHorizontal: 0.06 * STANDARD_SIZE
   },
-  pointCotainer: {
+  pointContainer: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     padding: 0.1 * STANDARD_SIZE,
     margin: 0.07 * STANDARD_SIZE,
+    height: 0.1 * STANDARD_SIZE,
     backgroundColor: "#fffde7",
     borderRadius: 10,
     elevation: 8,
@@ -32,8 +35,17 @@ const styles = StyleSheet.create({
       width: 1
     }
   },
+  pointInnerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: STANDARD_SIZE * 0.6,
+    marginHorizontal: "auto"
+  },
   pointText: {
-    fontSize: 0.06 * STANDARD_SIZE
+    fontSize: 0.06 * STANDARD_SIZE,
+    fontWeight: "600",
+    color: "#1c2a48"
   },
   recommendContainer: {
     flex: 1,
@@ -73,15 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff9c4",
     margin: 0.01 * STANDARD_SIZE,
     padding: 0.02 * STANDARD_SIZE,
-    borderRadius: 10,
-    elevation: 5,
-    shadowColor: "#ffccbc",
-    shadowOpacity: 0.4,
-    shadowRadius: 7,
-    shadowOffset: {
-      height: 4,
-      width: 1
-    }
+    borderRadius: 10
   },
 
   recommendItemText: {
@@ -111,13 +115,16 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-
+const ITEMS = {
+  item0: require("../assets/images/GPSitems1.jpg"),
+  item1: require("../assets/images/GPSitems2.jpg"),
+  item2: require("../assets/images/GPSitems3.jpg"),
+  item3: require("../assets/images/GPSitems4.jpg"),
+  item4: require("../assets/images/GPSitems5.png")
+};
 const RecommendItem = props => (
   <View style={styles.recommendItemContainer}>
-    <Image
-      style={{ width: 100, height: 100 }}
-      // source={require("" + props.image)}
-    />
+    <Image style={{ width: 100, height: 100 }} source={props.image} />
 
     <Text style={styles.recommendItemText}>{props.name}</Text>
 
@@ -146,8 +153,14 @@ class ExchangeScreen extends React.PureComponent {
   render() {
     return (
       <ScrollView containerStyle={styles.container}>
-        <View style={styles.pointCotainer}>
-          <Text style={styles.pointText}> Point 8446</Text>
+        <View style={styles.pointContainer}>
+          <View style={styles.pointInnerContainer}>
+            <Image
+              style={{ width: 100, height: 100 }}
+              source={require("../assets/images/dCoin.png")}
+            />
+            <Text style={styles.pointText}> 8446</Text>
+          </View>
         </View>
         <Divider />
         <View style={styles.recommendContainer}>
@@ -157,31 +170,31 @@ class ExchangeScreen extends React.PureComponent {
               name="STARBUCKS 星巴克 - 8折兌換卷"
               distance="350公尺"
               time="約4分鐘"
-              image="../assets/images/profile1.jpg"
+              image={ITEMS["item0"]}
             />
             <RecommendItem
               name="萊爾富 – 10元抵用券"
               distance="500公尺"
               time="約6分鐘"
-              image="../assets/images/profile1.jpg"
+              image={ITEMS["item1"]}
             />
             <RecommendItem
               name="全聯福利中心 – 鮮奶兌換券"
               distance="1.3公里"
               time="約18分鐘"
-              image="../assets/images/profile1.jpg"
+              image={ITEMS["item2"]}
             />
             <RecommendItem
-              name="摩斯漢堡 – 海老天丼珍珠堡特價 $80 ( 原價$110 )"
+              name="摩斯漢堡 – 海老天丼珍珠堡特價 $80"
               distance="800公尺"
               time="約10分鐘"
-              image="../assets/images/profile1.jpg"
+              image={ITEMS["item3"]}
             />
             <RecommendItem
               name="7-ELEVEN –原萃免費兌換券"
               distance="500公尺"
               time="約7分鐘"
-              image="../assets/images/profile1.jpg"
+              image={ITEMS["item4"]}
             />
           </ScrollView>
         </View>

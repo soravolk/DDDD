@@ -109,7 +109,7 @@ class HomeScreen extends React.PureComponent {
           </View>
           <View style={styles.circleOutside}>
             <View style={styles.circleContainer}>
-              <Text style={styles.wishText}>84460</Text>
+              <Text style={styles.wishText}>8446</Text>
             </View>
           </View>
         </ImageBackground>

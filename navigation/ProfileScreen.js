@@ -30,11 +30,12 @@ const styles = StyleSheet.create({
   introduceContainer: {
     flex: 1,
     alignItems: "center",
-    marginVertical: 0.03 * STANDARD_SIZE,
-    padding: 0.03 * STANDARD_SIZE
+    marginTop: 0.02 * STANDARD_SIZE,
+    paddingTop: 0.02 * STANDARD_SIZE
   },
   introduceText: {
-    fontSize: 0.04 * STANDARD_SIZE
+    fontSize: 0.04 * STANDARD_SIZE,
+    lineHeight: 0.08 * STANDARD_SIZE
   }
 });
 
@@ -107,12 +108,10 @@ ProfileScreen.navigationOptions = {
           <Avatar
             rounded
             size="large"
-            source={{
-              uri: "https://picsum.photos/100"
-            }}
+            source={require("../assets/images/profile.jpg")}
             showEditButton
           />
-          <Text style={styles.nameText}>小樹人精靈</Text>
+          <Text style={styles.nameText}>DDDD</Text>
           <View style={styles.introduceContainer}>
             <Text style={styles.introduceText}>
               我很喜歡跑步，平常都跑5k，有時間的話還會再跑20k，請多指教

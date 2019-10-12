@@ -6,7 +6,8 @@ import {
   StyleSheet,
   StatusBar,
   Dimensions,
-  Modal
+  Modal,
+  ImageBackground
 } from "react-native";
 import { ListItem, Avatar, Divider, Button } from "react-native-elements";
 import { friendList } from "../assets/MissionData";
@@ -90,6 +91,7 @@ export const PROFILE = {
 class friendListScreen extends Component {
   state = {
     modalVisible: false,
+    chatroomVisible: false,
     name: "",
     profile: PROFILE["profile0"]
   };
@@ -103,6 +105,10 @@ class friendListScreen extends Component {
 
   setVisible = () => {
     this.setState({ modalVisible: !this.state.modalVisible });
+  };
+
+  openChatroom = () => {
+    this.setState({ chatroomVisible: !this.state.chatroomVisible });
   };
 
   keyExtractor = (item, index) => index.toString();
@@ -138,6 +144,23 @@ class friendListScreen extends Component {
     return (
       <View>
         <Modal
+          visible={this.state.chatroomVisible}
+          onRequestClose={this.openChatroom}
+        >
+          <View>
+            <ImageBackground
+              source={require("../assets/images/chatroom.png")}
+              style={{
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            ></ImageBackground>
+          </View>
+        </Modal>
+
+        <Modal
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={this.setVisible}
@@ -161,7 +184,15 @@ class friendListScreen extends Component {
                   onPress={changeProfile}
                   outline
                 />
-                <Button buttonStyle={styles.buttonItem} title="聊天" outline />
+                <Button
+                  buttonStyle={styles.buttonItem}
+                  title="聊天"
+                  onPress={() => {
+                    this.openChatroom();
+                    this.setVisible();
+                  }}
+                  outline
+                />
               </View>
             </View>
           </View>

@@ -82,6 +82,7 @@ class MissionSelectScreen extends Component {
   };
   state = {
     modalVisible: false,
+    modalInviteVisible: false,
     missionList: missionList,
     itemId: 1000,
     name: "",
@@ -93,6 +94,10 @@ class MissionSelectScreen extends Component {
 
   setVisible = () => {
     this.setState({ modalVisible: !this.state.modalVisible });
+  };
+
+  setInviteVisible = () => {
+    this.setState({ modalInviteVisible: !this.state.modalInviteVisible });
   };
 
   renderMission = ({ item }) => {
@@ -132,7 +137,7 @@ class MissionSelectScreen extends Component {
         name: this.state.name,
         description: this.state.description,
         type: this.state.type,
-        random: 0
+        random: STANDARD_SIZE / 2
       });
       this.setState({
         missionList: missionList,
@@ -159,7 +164,7 @@ class MissionSelectScreen extends Component {
                   buttonStyle={styles.buttonItem}
                   title="邀請"
                   outline
-                  onPress={this.setVisible}
+                  onPress={this.setInviteVisible}
                 />
                 <Button
                   buttonStyle={styles.buttonItem}
@@ -169,6 +174,18 @@ class MissionSelectScreen extends Component {
                 />
               </View>
             </View>
+          </View>
+        </Modal>
+        <Modal
+          visible={this.state.modalInviteVisible}
+          onRequestClose={this.setInviteVisible}
+        >
+          <View>
+            {/* <FlatList
+          keyExtractor={this.keyExtractor}
+          data={this.state.missionList}
+          renderItem={this.renderMission}
+        /> */}
           </View>
         </Modal>
         <ListItem
