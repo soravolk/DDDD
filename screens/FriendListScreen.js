@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const PROFILE = {
+export const PROFILE = {
   profile0: require("../assets/images/profile1.jpg"),
   profile1: require("../assets/images/profile2.jpg"),
   profile2: require("../assets/images/profile3.jpg"),
@@ -90,7 +90,8 @@ const PROFILE = {
 class friendListScreen extends Component {
   state = {
     modalVisible: false,
-    name: ""
+    name: "",
+    profile: PROFILE["profile0"]
   };
 
   static navigationOptions = {
@@ -110,20 +111,30 @@ class friendListScreen extends Component {
     return (
       <ListItem
         title={item.name}
-        subtitle={"../assets/images/profile2.jpg"}
+        subtitle={item.description}
         leftAvatar={{
           source: PROFILE["profile" + index]
         }}
         containerStyle={styles.container}
         onPress={() => {
           this.setVisible();
-          this.setState({ name: item.name });
+          this.setState({
+            name: item.name,
+            profile: PROFILE["profile" + index]
+          });
         }}
       />
     );
   };
 
   render() {
+    const { navigate } = this.props.navigation;
+    const changeProfile = () => {
+      this.setVisible();
+      navigate("Home", {
+        profile: this.state.profile
+      });
+    };
     return (
       <View>
         <Modal
@@ -137,16 +148,19 @@ class friendListScreen extends Component {
                 rounded
                 size="xlarge"
                 containerStyle={styles.avatarContainer}
-                source={{
-                  uri: "https://picsum.photos/100"
-                }}
+                source={this.state.profile}
               />
               <Text style={styles.nameText}>{this.state.name}</Text>
               <View style={styles.dividerContainer}>
                 <Divider backgroundColor="black" />
               </View>
               <View style={styles.buttonContainer}>
-                <Button buttonStyle={styles.buttonItem} title="任務" outline />
+                <Button
+                  buttonStyle={styles.buttonItem}
+                  title="任務"
+                  onPress={changeProfile}
+                  outline
+                />
                 <Button buttonStyle={styles.buttonItem} title="聊天" outline />
               </View>
             </View>
