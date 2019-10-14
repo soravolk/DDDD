@@ -155,8 +155,8 @@ class MissionSelectScreen extends Component {
         mateName: mateName
       });
       navigate("MissionList", {
-        missionSelected: this.state.missionSelected,
-        mateName: this.state.mateName
+        missionSelected: missionSelected,
+        mateName: mateName
       });
     };
 
