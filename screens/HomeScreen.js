@@ -89,7 +89,7 @@ class HomeScreen extends React.PureComponent {
     const { navigate } = this.props.navigation;
     const profileName = this.props.navigation.getParam(
       "profile",
-      PROFILE["profile0"]
+      PROFILE["profile4"]
     );
     return (
       <View style={styles.container}>
