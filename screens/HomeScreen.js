@@ -94,7 +94,7 @@ class HomeScreen extends React.PureComponent {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={require("../assets/images/homeBackground.png")}
+          source={require("../assets/images/homeBackground.gif")}
           style={{ width: "100%", height: "110%", top: 0 }}
         >
           <View style={styles.friendContainer}>
@@ -107,7 +107,6 @@ class HomeScreen extends React.PureComponent {
               containerStyle={styles.avatar}
             />
           </View>
-
         </ImageBackground>
       </View>
     );
