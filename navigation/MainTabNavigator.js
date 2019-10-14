@@ -7,6 +7,7 @@ import {
 } from "react-navigation";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
+import InviteListScreen from "../screens/InviteListScreen";
 import MissionSelectScreen from "../screens/MissionSelectScreen";
 import MissionListScreen from "../screens/MissionListScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
@@ -56,9 +57,19 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = "";
 
-const MissionStack = createMaterialTopTabNavigator(
+const MissionSelectStack = createStackNavigator(
   {
     MissionSelect: MissionSelectScreen,
+    InviteList: InviteListScreen
+  },
+  config
+);
+
+MissionSelectStack.path = "";
+
+const MissionStack = createMaterialTopTabNavigator(
+  {
+    任務列表: MissionSelectStack,
     MissionList: MissionListScreen
   },
   {

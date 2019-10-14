@@ -4,13 +4,14 @@ import {
   View,
   FlatList,
   StatusBar,
+  ScrollView,
   StyleSheet,
   Dimensions,
   Modal
 } from "react-native";
 import { ListItem, Avatar, Button } from "react-native-elements";
 import Svg, { Circle, Line } from "react-native-svg";
-import { missionSelected } from "../assets/MissionData";
+import { missionOrigin, missionTop } from "../assets/MissionData";
 
 const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
 
@@ -33,6 +34,27 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: "black",
     width: STANDARD_SIZE / 2
+  },
+  modalInfoContainer: {
+    marginVertical: 0.3 * STANDARD_SIZE,
+    marginHorizontal: 0.1 * STANDARD_SIZE,
+    backgroundColor: "#fffde7",
+    borderRadius: 10,
+    elevation: 8,
+    shadowColor: "#ffccbc",
+    shadowOpacity: 0.4,
+    shadowRadius: 7,
+    shadowOffset: {
+      height: 4,
+      width: 1
+    }
+  },
+  modalInfoContainerInner: {
+    alignItems: "center",
+    paddingHorizontal: 0.1 * STANDARD_SIZE,
+    paddingTop: 0.05 * STANDARD_SIZE,
+    paddingBottom: 0.01 * STANDARD_SIZE,
+    maxHeight: 1.2 * STANDARD_SIZE
   },
   modalContainer: {
     backgroundColor: "#fffde7",
@@ -139,6 +161,13 @@ const styles = StyleSheet.create({
   pointText: {
     fontSize: 0.05 * STANDARD_SIZE,
     marginVertical: 0.04 * STANDARD_SIZE
+  },
+  descriptionContainer: {
+    paddingVertical: 0.08 * STANDARD_SIZE
+  },
+  descriptionText: {
+    fontSize: 0.04 * STANDARD_SIZE,
+    lineHeight: 0.08 * STANDARD_SIZE
   }
 });
 
@@ -185,10 +214,33 @@ class MissionListScreen extends React.PureComponent {
 
   state = {
     modalVisible: false,
-    pointModalVisible: false
+    modalInfoVisible: false,
+    pointModalVisible: false,
+    missionTop: missionTop,
+    missionOrigin: missionOrigin,
+    itemId: 1000
   };
 
   keyExtractor = (item, index) => index.toString();
+
+  handleMatch = () => {
+    this.setInfoVisible();
+    this.setVisible();
+    const missionTop = this.state.missionTop.filter(item => item.id != 1);
+    this.setState({
+      missionTop: missionTop
+    });
+  };
+
+  handleComplete = () => {
+    this.setPointVisible();
+    const missionOrigin = this.state.missionOrigin.filter(
+      item => item.id != this.state.itemId
+    );
+    this.setState({
+      missionOrigin: missionOrigin
+    });
+  };
 
   renderMission = ({ item }) => {
     return (
@@ -202,7 +254,10 @@ class MissionListScreen extends React.PureComponent {
           bottomDivider
           leftIcon={{ name: item.type }}
           subtitle={ProgressBar(item.random)}
-          onPress={this.setPointVisible}
+          onPress={() => {
+            this.setPointVisible();
+            this.setState({ itemId: item.id });
+          }}
         />
       </View>
     );
@@ -211,16 +266,50 @@ class MissionListScreen extends React.PureComponent {
   setPointVisible = () => {
     this.setState({ pointModalVisible: !this.state.pointModalVisible });
   };
-
+  setInfoVisible = () => {
+    this.setState({ modalInfoVisible: !this.state.modalInfoVisible });
+  };
   setVisible = () => {
     this.setState({ modalVisible: !this.state.modalVisible });
   };
 
+  // ? this.props.navigation.getParam("missionSelected")
+  // : missionSelected
+
   render() {
-    const missionAdd = this.props.navigation.getParam("missionSelected");
-    const missionList = missionAdd ? missionAdd : missionSelected;
+    const wholeMission = this.props.navigation.getParam("missionSelected")
+      ? this.state.missionOrigin.concat(
+          this.props.navigation.getParam("missionSelected")
+        )
+      : this.state.missionOrigin;
+    const mateName = this.props.navigation.getParam("mateName");
     return (
       <View>
+        <Modal
+          visible={this.state.modalInfoVisible}
+          onRequestClose={this.setInfoVisible}
+          transparent={true}
+        >
+          <View style={styles.modalInfoContainer}>
+            <View style={styles.modalInfoContainerInner}>
+              <ScrollView style={styles.descriptionContainer}>
+                <Text style={styles.descriptionText}>
+                  {missionTop[0].description}
+                </Text>
+              </ScrollView>
+              <View style={styles.buttonContainer}>
+                <Button
+                  buttonStyle={styles.buttonItem}
+                  title="完成"
+                  outline
+                  onPress={() => {
+                    this.handleMatch();
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
         <Modal
           visible={this.state.modalVisible}
           onRequestClose={this.setVisible}
@@ -253,7 +342,12 @@ class MissionListScreen extends React.PureComponent {
                   outline
                   onPress={this.setVisible}
                 />
-                <Button buttonStyle={styles.buttonItem} title="選定" outline />
+                <Button
+                  buttonStyle={styles.buttonItem}
+                  title="選定"
+                  onPress={this.setVisible}
+                  outline
+                />
               </View>
             </View>
           </View>
@@ -265,27 +359,45 @@ class MissionListScreen extends React.PureComponent {
         >
           <View style={styles.pointModalContainer}>
             <View style={styles.pointModalContainerInner}>
-              <Text style={styles.pointText}>獲得50點！</Text>
+              <Text style={styles.pointText}>獲得50點！{mateName}</Text>
               <View style={styles.buttonContainer}>
                 <Button
                   buttonStyle={styles.buttonItem}
                   title="OK"
                   outline
-                  onPress={this.setPointVisible}
+                  onPress={this.handleComplete}
                 />
               </View>
             </View>
           </View>
         </Modal>
         <ListItem
-          title="頂置任務"
-          subtitle="1000步和配對"
+          title={
+            this.state.missionTop[0].name != ""
+              ? this.state.missionTop[0].name
+              : "已解完每日任務"
+          }
+          titleProps={{
+            numberOfLines: 1
+          }}
+          // subtitle={missionTop[0].description}
           bottomDivider
-          onPress={this.setVisible}
+          subtitle={
+            this.state.missionTop[0].random != null
+              ? ProgressBar(this.state.missionTop[0].random)
+              : null
+          }
+          onPress={() => {
+            this.setInfoVisible();
+          }}
+          containerStyle={{
+            backgroundColor:
+              this.state.missionTop[0].name != "" ? "#ffe0b2" : "white"
+          }}
         />
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={missionList}
+          data={wholeMission}
           renderItem={this.renderMission}
         />
       </View>
@@ -294,17 +406,3 @@ class MissionListScreen extends React.PureComponent {
 }
 
 export default MissionListScreen;
-
-{
-  /* <Circle
-fill="none"
-cx={radius}
-cy={radius}
-r={radius - 5}
-stroke="orange"
-strokeWidth={strokeWidth}
-strokeDashoffset={100}
-strokeDasharray="2"
-strokeLinecap="50"
-/> */
-}

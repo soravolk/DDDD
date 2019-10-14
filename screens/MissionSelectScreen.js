@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { ListItem, Avatar, Button } from "react-native-elements";
 import { missionList, missionSelected } from "../assets/MissionData";
+import { bold } from "ansi-colors";
+import MissionListScreen from "./MissionListScreen";
 
 const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
 
@@ -71,14 +73,17 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: 0.04 * STANDARD_SIZE,
     lineHeight: 0.08 * STANDARD_SIZE
+  },
+  mateNameText: {
+    fontSize: 0.03 * STANDARD_SIZE,
+    textAlign: "right",
+    fontWeight: "bold",
+    lineHeight: 0.06 * STANDARD_SIZE
   }
 });
 class MissionSelectScreen extends Component {
   static navigationOptions = {
-    title: "任務列表",
-    headerStyle: {
-      backgroundColor: "#fffde7"
-    }
+    header: null
   };
   state = {
     modalVisible: false,
@@ -88,7 +93,8 @@ class MissionSelectScreen extends Component {
     name: "",
     description: "",
     type: "",
-    missionSelected: missionSelected
+    missionSelected: missionSelected,
+    mateName: ""
   };
   keyExtractor = (item, index) => index.toString();
 
@@ -128,6 +134,10 @@ class MissionSelectScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const mateName = this.props.navigation.getParam(
+      "mateName",
+      "快挑選一名隊友吧！"
+    );
     const handleAccept = () => {
       this.setVisible();
       const missionList = this.state.missionList.filter(
@@ -141,10 +151,15 @@ class MissionSelectScreen extends Component {
       });
       this.setState({
         missionList: missionList,
-        missionSelected: missionSelected
+        missionSelected: missionSelected,
+        mateName: mateName
       });
-      navigate("MissionList", { missionSelected: this.state.missionSelected });
+      navigate("MissionList", {
+        missionSelected: this.state.missionSelected,
+        mateName: this.state.mateName
+      });
     };
+
     return (
       <ScrollView>
         <Modal
@@ -155,6 +170,7 @@ class MissionSelectScreen extends Component {
           <View style={styles.modalContainer}>
             <View style={styles.modalContainerInner}>
               <ScrollView style={styles.descriptionContainer}>
+                <Text style={styles.mateNameText}>{mateName}</Text>
                 <Text style={styles.descriptionText}>
                   {this.state.description}
                 </Text>
@@ -164,7 +180,10 @@ class MissionSelectScreen extends Component {
                   buttonStyle={styles.buttonItem}
                   title="邀請"
                   outline
-                  onPress={this.setInviteVisible}
+                  onPress={() => {
+                    navigate("InviteList");
+                    this.setVisible();
+                  }}
                 />
                 <Button
                   buttonStyle={styles.buttonItem}
@@ -180,17 +199,11 @@ class MissionSelectScreen extends Component {
           visible={this.state.modalInviteVisible}
           onRequestClose={this.setInviteVisible}
         >
-          <View>
-            {/* <FlatList
-          keyExtractor={this.keyExtractor}
-          data={this.state.missionList}
-          renderItem={this.renderMission}
-        /> */}
-          </View>
+          <View></View>
         </Modal>
         <ListItem
-          title="頂置任務"
-          subtitle="1000步和配對"
+          title="本日頂置任務已接受"
+          subtitle="等待明天的時候再來喔～"
           bottomDivider
           onPress={this.setVisible}
         />

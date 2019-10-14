@@ -10,7 +10,7 @@ import {
   ImageBackground
 } from "react-native";
 import { ListItem, Avatar, Divider, Button } from "react-native-elements";
-import { friendList } from "../assets/MissionData";
+import { inviteList } from "../assets/MissionData";
 
 const StatusBarHeight = StatusBar.currentHeight;
 const STANDARD_SIZE = Math.floor(Dimensions.get("window").width);
@@ -85,30 +85,23 @@ export const PROFILE = {
   profile1: require("../assets/images/profile2.jpg"),
   profile2: require("../assets/images/profile3.jpg"),
   profile3: require("../assets/images/profile4.jpg"),
-  profile4: require("../assets/images/profile5.jpg")
+  profile4: require("../assets/images/profile5.jpg"),
+  profile5: require("../assets/images/profile6.jpg")
 };
 
-class friendListScreen extends Component {
+class InviteListScreen extends Component {
   state = {
     modalVisible: false,
-    chatroomVisible: false,
     name: "",
     profile: PROFILE["profile0"]
   };
 
   static navigationOptions = {
-    // header: null,
-    headerStyle: {
-      backgroundColor: "#fffde7"
-    }
+    header: null
   };
 
   setVisible = () => {
     this.setState({ modalVisible: !this.state.modalVisible });
-  };
-
-  openChatroom = () => {
-    this.setState({ chatroomVisible: !this.state.chatroomVisible });
   };
 
   keyExtractor = (item, index) => index.toString();
@@ -135,31 +128,14 @@ class friendListScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const changeProfile = () => {
+    const selectTeammate = () => {
       this.setVisible();
-      navigate("Home", {
-        profile: this.state.profile
+      navigate("MissionSelect", {
+        mateName: this.state.name
       });
     };
     return (
       <View>
-        <Modal
-          visible={this.state.chatroomVisible}
-          onRequestClose={this.openChatroom}
-        >
-          <View>
-            <ImageBackground
-              source={require("../assets/images/chatroom2.png")}
-              style={{
-                width: "100%",
-                height: "100%",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            ></ImageBackground>
-          </View>
-        </Modal>
-
         <Modal
           transparent={true}
           visible={this.state.modalVisible}
@@ -180,17 +156,8 @@ class friendListScreen extends Component {
               <View style={styles.buttonContainer}>
                 <Button
                   buttonStyle={styles.buttonItem}
-                  title="任務"
-                  onPress={changeProfile}
-                  outline
-                />
-                <Button
-                  buttonStyle={styles.buttonItem}
-                  title="聊天"
-                  onPress={() => {
-                    this.openChatroom();
-                    this.setVisible();
-                  }}
+                  title="選定"
+                  onPress={selectTeammate}
                   outline
                 />
               </View>
@@ -199,7 +166,7 @@ class friendListScreen extends Component {
         </Modal>
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={friendList}
+          data={inviteList}
           renderItem={this.renderFriends}
         />
       </View>
@@ -207,4 +174,4 @@ class friendListScreen extends Component {
   }
 }
 
-export default friendListScreen;
+export default InviteListScreen;
